@@ -1,29 +1,34 @@
-document.querySelectorAll('.social-count').forEach(node => node.remove())
+function strayAwayFromOthers() {
+  document.querySelectorAll('.social-count').forEach(node => node.remove())
 
+  becomeHermit();
 
-// document.querySelectorAll('.octicon-star').forEach(node => node.parentNode.remove())
+  function becomeHermit() {
+    document.querySelectorAll('a').forEach(node => {
+      if (node.href.indexOf('stargazers') > -1) {
+        node.remove();
+      }
+    });
+  }
 
-becomeHermit();
-
-function becomeHermit() {
-  document.querySelectorAll('a').forEach(node => {
-    if (node.href.indexOf('stargazers') > -1) {
-      node.remove();
+  function proSocialDistance(count) {
+    becomeHermit();
+    if (count < 10) {
+      setTimeout(() => {
+        proSocialDistance(count + 1)
+      }, 50)
     }
+  }
+
+  document.querySelectorAll('summary[role="button"]').forEach(node => {
+    node.addEventListener('mouseover', () => {
+      proSocialDistance(0)
+    })
   });
 }
 
-function proSocialDistance(count) {
-  becomeHermit();
-  if(count < 10) {
-    setTimeout(()=>{
-      proSocialDistance(count + 1)
-    }, 50)
-  }  
-}
+strayAwayFromOthers();
 
-document.querySelectorAll('summary[role="button"]').forEach(node => {
-  node.addEventListener('mouseover', () => {
-    proSocialDistance(0)
-  })
-});
+chrome.runtime.onMessage.addListener(()=>{
+  strayAwayFromOthers();
+})
