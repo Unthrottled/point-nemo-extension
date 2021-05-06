@@ -1,0 +1,23 @@
+{
+  "name": "GitHub Decorator",
+  "description": "Make GitHub Great Again!",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "background":{
+      "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.github.com/*"
+      ],
+      "js": [
+        "decorator.js"
+      ]
+    }
+  ]
+}
